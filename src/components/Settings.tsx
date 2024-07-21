@@ -82,7 +82,12 @@ export const Settings = observer((props: SettingsProps) => {
               </UserLogin>
               .
             </Paragraph>
-            <LargeButton style={{marginRight: '8px'}} onClick={() => props.core.triggerBackgroundRefresh()}>Refresh</LargeButton>
+            <LargeButton
+              style={{ marginRight: "8px" }}
+              onClick={() => props.core.triggerBackgroundRefresh()}
+            >
+              {props.core.refreshing ? "Refreshing..." : "Refresh"}
+            </LargeButton>
             <LargeButton onClick={openForm}>Update token</LargeButton>
           </Row>
         ) : props.core.lastError ? (
