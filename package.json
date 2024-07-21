@@ -59,5 +59,6 @@
     "test": "jest",
     "lint:check": "eslint \"src/**/*.ts\" \"src/**/*.tsx\"",
     "lint:fix": "eslint --fix \"src/**/*.ts\" \"src/**/*.tsx\""
-  }
+  },
+  "packageManager": "yarn@4.3.1"
 }
