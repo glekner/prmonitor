@@ -1,22 +1,16 @@
-import styled from "@emotion/styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import { Badge, Tab, Tabs } from "react-bootstrap";
 import { Filter } from "../filtering/filters";
-import { isRunningAsPopup } from "../popup-environment";
 import { Core } from "../state/core";
 import { PullRequest, ref } from "../storage/loaded-state";
 import { MuteType } from "../storage/mute-configuration";
-import { Link } from "./design/Link";
-import { Row } from "./design/Row";
 import { IgnoredRepositories } from "./IgnoredRepositories";
 import { Loader } from "./Loader";
-import { NewCommitsToggle } from "./NewCommitsToggle";
+// import { NewCommitsToggle } from "./NewCommitsToggle";
 import { PullRequestList } from "./PullRequestList";
 import { Settings } from "./Settings";
-import { Status } from "./Status";
-import { WhitelistedTeams } from "./WhitelistedTeams";
+// import { WhitelistedTeams } from "./WhitelistedTeams";
 
 export interface PopupProps {
   core: Core;
@@ -52,21 +46,21 @@ export const Popup = observer((props: PopupProps) => {
     props.core.unmutePullRequest(ref(pullRequest));
   };
 
-  const onToggleNewCommitsNotification = () => {
-    props.core.toggleNewCommitsNotificationSetting();
-  };
+  // const onToggleNewCommitsNotification = () => {
+  //   props.core.toggleNewCommitsNotificationSetting();
+  // };
 
-  const onToggleOnlyDirectRequests = () => {
-    props.core.toggleOnlyDirectRequestsSetting();
-  };
+  // const onToggleOnlyDirectRequests = () => {
+  //   props.core.toggleOnlyDirectRequestsSetting();
+  // };
 
-  const onChangeWhitelistedTeams = (teamsText: string) => {
-    const teams = teamsText
-      .split(",")
-      .map((s) => s.trim())
-      .filter((s) => s.length);
-    props.core.onChangeWhitelistedTeamsSetting(teams);
-  };
+  // const onChangeWhitelistedTeams = (teamsText: string) => {
+  //   const teams = teamsText
+  //     .split(",")
+  //     .map((s) => s.trim())
+  //     .filter((s) => s.length);
+  //   props.core.onChangeWhitelistedTeamsSetting(teams);
+  // };
 
   if (props.core.overallStatus !== "loaded") {
     return <Loader />;
@@ -74,17 +68,6 @@ export const Popup = observer((props: PopupProps) => {
 
   return (
     <>
-      <Row>
-        <Status core={props.core} />
-        {isRunningAsPopup() && (
-          <FullScreenLink
-            target="_blank"
-            href={`chrome-extension://${chrome.runtime.id}/index.html`}
-          >
-            <FontAwesomeIcon icon="clone" />
-          </FullScreenLink>
-        )}
-      </Row>
       {props.core.token &&
         // Don't show the list if there was an error, we're not refreshing
         // anymore (because of the error) and we don't have any loaded state.
@@ -159,32 +142,9 @@ export const Popup = observer((props: PopupProps) => {
                 eventKey={Filter.MINE}
               />
             </Tabs>
+
             <PullRequestList
-              header={
-                state.currentFilter === Filter.INCOMING && (
-                  <>
-                    <WhitelistedTeams
-                      onlyDirectRequestsToggled={
-                        !!props.core.muteConfiguration.onlyDirectRequests
-                      }
-                      whitelistedTeams={
-                        props.core.muteConfiguration.whitelistedTeams || []
-                      }
-                      userLogin={
-                        props.core.loadedState
-                          ? props.core.loadedState.userLogin
-                          : undefined
-                      }
-                      onToggleOnlyDirectRequests={onToggleOnlyDirectRequests}
-                      onChangeWhitelistedTeams={onChangeWhitelistedTeams}
-                    />
-                    <NewCommitsToggle
-                      toggled={!!props.core.muteConfiguration.notifyNewCommits}
-                      onToggle={onToggleNewCommitsNotification}
-                    />
-                  </>
-                )
-              }
+              header={null}
               pullRequests={
                 props.core.filteredPullRequests
                   ? props.core.filteredPullRequests[state.currentFilter]
@@ -214,12 +174,3 @@ export const Popup = observer((props: PopupProps) => {
     </>
   );
 });
-
-const FullScreenLink = styled(Link)`
-  padding: 16px;
-  opacity: 0.7;
-
-  &:hover {
-    opacity: 1;
-  }
-`;

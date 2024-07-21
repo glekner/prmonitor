@@ -30,7 +30,7 @@ const core = new Core(env);
 core.load().catch(console.error);
 
 let globalCssTemplates = `
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
 
   body {
     background: #f6f8fc;
@@ -38,7 +38,7 @@ let globalCssTemplates = `
     margin: 0 auto;
     padding: 8px;
     width: 600px;
-    font-family: "Manrope", sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
   }
 
